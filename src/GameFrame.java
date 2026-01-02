@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 
 public class GameFrame extends JFrame {
     public GameFrame(){
+        this.add(new GamePanel());
         this.setTitle("Snake Game - By Bablu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
