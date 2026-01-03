@@ -9,7 +9,8 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_HEIGHT = 600;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-    static final int DELAY = 75; // Snake speed
+
+    int DELAY = 75; // Snake speed
 
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
@@ -141,7 +142,22 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+        g.drawString("Game Over Bablu", (SCREEN_WIDTH - metrics2.stringWidth("Game Over Bablu")) / 2, SCREEN_HEIGHT / 2);
+    }
+
+    public void restartGame() {
+        running = true;
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        // Snake ko wapas starting position (0,0) par reset karna
+        for(int i = 0; i < bodyParts; i++) {
+            x[i] = 0;
+            y[i] = 0;
+        }
+        newApple();
+        timer.start();
+        repaint();
     }
 
     @Override
@@ -169,6 +185,23 @@ public class GamePanel extends JPanel implements ActionListener {
                     break;
                 case KeyEvent.VK_DOWN:
                     if (direction != 'U') direction = 'D';
+                    break;
+                case KeyEvent.VK_SPACE:
+                    if(!running) {
+                        restartGame();
+                    }
+                    break;
+                case KeyEvent.VK_1:
+                    DELAY = 150; // Slow
+                    timer.setDelay(DELAY);
+                    break;
+                case KeyEvent.VK_2:
+                    DELAY = 75; // Normal
+                    timer.setDelay(DELAY);
+                    break;
+                case KeyEvent.VK_3:
+                    DELAY = 40; // Fast
+                    timer.setDelay(DELAY);
                     break;
             }
         }
